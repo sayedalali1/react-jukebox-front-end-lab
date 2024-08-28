@@ -1,11 +1,19 @@
-const TrackList = ({ tracks }) => {
+const TrackList = ({ tracks, edit, handleDeleteTrack }) => {
+
     return(
         <>
             <h2>TrackList</h2>
             <ul>
                 {tracks.map((track) => (
                     <li key={track._id}>
-                        {track.title} by {track.artist}
+                        <div>
+                            {track.title} by {track.artist}
+                        </div>
+
+                        <div>
+                            <button onClick={() => edit(track)}>Edit Track</button>
+
+                        </div>
                     </li>
                 ))}
             </ul>

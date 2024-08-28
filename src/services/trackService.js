@@ -1,19 +1,13 @@
-const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/tracks`;
+const BASE_URL=`${import.meta.env.VITE_BACK_END_SERVER_URL}/tracks`;
 
 const index = async () => {
-
     try {
 
         const res = await fetch(BASE_URL);
-
         return res.json();
-
     } catch (error) {
-
         console.log(error);
-
     };
-
 };
 
 const create = async (formData) => {
@@ -22,16 +16,43 @@ const create = async (formData) => {
         const res = await fetch(BASE_URL, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(formData)
         });
-        
+
         return res.json();
     } catch (error) {
         console.log(error);
     };
 };
 
+const update = async (formData, trackId) => {
+    try {
 
-export { index, create }
+        const res = await fetch (`${BASE_URL}/${trackId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+
+        return res.json();
+    } catch (error) {
+        console.log(error);
+    };
+};
+
+const deleteTrack = async (trackId) => {
+    try {
+      const res = await fetch(`${BASE_URL}/${trackId}`, {
+        method: 'DELETE'
+      });
+      return res.json();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export { index, create, update, deleteTrack }

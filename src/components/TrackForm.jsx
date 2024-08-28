@@ -1,19 +1,27 @@
-import { useState } from 'react';
 
-const TrackForm = ({ handleAddTrack, setIsFormOpen }) => {
+import { useState, useEffect } from 'react';
+
+const TrackForm = ({ handleOnSubmit, setIsFormOpen, track, handleDeleteTrack }) => {
     const [formData, setFormData] = useState({
         title: '',
         artist: ''
     });
 
+    useEffect(() => {
+        if(track) {
+            setFormData({ title: track.title, artist: track.artist });
+        };
+    }, [track]);
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        handleAddTrack(formData);
+        handleOnSubmit(formData);
         setIsFormOpen(false);
         setFormData({ title: '', artist: '' });
     };
 
     const handleChange = (event) => {
+        
         setFormData({...formData, [event.target.name]: event.target.value });
     };
 
@@ -29,6 +37,8 @@ const TrackForm = ({ handleAddTrack, setIsFormOpen }) => {
             </div>
             <button type="submit">Submit</button>
             <button type="button" onClick={() => setIsFormOpen(false)}>Close Form</button>
+            <button onClick={() => handleDeleteTrack(track._id)}>Delete Track</button>
+
         </form>
     );
 };
